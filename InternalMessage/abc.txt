@@ -1,0 +1,346 @@
+
+> InternalMessage@0.0.1 test
+> jest
+
+  console.log
+    {
+      transactions: [
+        {
+          address: 31899780177550821629663133723569942367955924765714800219299666804762218362071n,
+          lt: 2000000n,
+          prevTransactionHash: 29028405892952275846692861210871685583647839033581322941803248135215788573642n,
+          prevTransactionLt: 1000000n,
+          now: 1698171184,
+          outMessagesCount: 1,
+          oldStatus: 'active',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:322]\tunpacking account 4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:196]\tlast_paid=1698171183; cells=6 bits=821 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:383]\tend of Account.unpack() for 0:4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7 (balance = 1000000000000000ng ; last_trans_lt = 1000000..1000001)\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:597]\tstorage paid for a message: 5 cells, 1230 bits\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:611]\tcomputed fwd fees = 2730000 + 0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:870]\tgas limits: max=1000000, limit=0, credit=10000\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1028]\tin_msg_state is null\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171184 562949959656304 2000000 56342229771868097729592965078385434302439516615328066780695604226973907758570 [ 999999997269999 (null) ] CS{Cell{0275c004686a2c066c784a915f3e01c853d3195ed254c948e21adbb3e4a9b3f5f3c74d720c80cd4329c0497800000000003d0905c0e35fa931a0001340} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1098]\tVM terminated with exit code 0\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1111]\tsteps: 50 gas: used=1937, max=1000000, limit=1000000, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=true, time=0.000162s\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1145]\tgas fees: 1937000 = 65536000 * 1937 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=999999995332999ng\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1636]\tstorage paid for a message: 3 cells, 792 bits\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.029000][transaction.cpp:1648]\tcomputed fwd fees = 2092000 + 0\n',
+          vmLogs: 'ULLSWAPIFNOT2\n' +
+            'execute DUP\n' +
+            'execute PUSHCONT x02D307D43001FB00\n' +
+            'execute PUSHCONT x32\n' +
+            'execute IFELSE\n' +
+            'execute POP s2\n' +
+            'execute implicit RET\n' +
+            'execute SWAP\n' +
+            'execute NOT\n' +
+            'execute implicit RET\n' +
+            'until loop body end\n' +
+            'until loop terminated\n' +
+            'execute 2DROP\n' +
+            'execute implicit RET\n',
+          debugLogs: '',
+          events: [Array],
+          parent: undefined,
+          children: [Array],
+          externals: []
+        },
+        {
+          address: 111404618500169436302101171512796720561795162635769664474110550572853171976745n,
+          lt: 3000000n,
+          prevTransactionHash: 0n,
+          prevTransactionLt: 0n,
+          now: 1698171184,
+          outMessagesCount: 1,
+          oldStatus: 'uninitialized',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:322]\tunpacking account F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:196]\tlast_paid=0; cells=0 bits=0 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:383]\tend of Account.unpack() for 0:F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29 (balance = 0ng ; last_trans_lt = 0..0)\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:870]\tgas limits: max=50000, limit=50000, credit=0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:1024]\tHASH(in_msg_state) = F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29, account_state_hash = F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171184 562949959656304 3000000 21994014335191056140490469662810947111695121971035604613686327183225335465099 [ 50000000 (null) ] CS{Cell{005fc00f64cc7918ee25f416b3879dde40aa87ffd37d2acec8e90b0a6550d872981fa2900000000000000000000000000004} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.040000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.041000][transaction.cpp:1098]\tVM terminated with exit code 9\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.041000][transaction.cpp:1111]\tsteps: 14 gas: used=532, max=50000, limit=50000, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.041000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=false, time=0.000529s\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.041000][transaction.cpp:1145]\tgas fees: 532000 = 65536000 * 532 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=49468000ng\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.041000][transaction.cpp:2470]\tsetting address rewriting info for newly-activated account F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29 with split_depth=0, orig_addr_rewrite=\n',
+          vmLogs: 'GETJMPZ\n' +
+            'execute POP s3\n' +
+            'execute NIP\n' +
+            'execute CTOS\n' +
+            'execute LDU 4\n' +
+            'execute DROP\n' +
+            'execute PUSHINT 1\n' +
+            'execute AND\n' +
+            'execute PUSHCONT x30\n' +
+            'execute IFJMP\n' +
+            'execute LDU 32\n' +
+            'handling exception code 9: cell underflow\n' +
+            'default exception handler, terminating vm with exit code 9\n',
+          debugLogs: '',
+          events: [Array],
+          parent: [Object],
+          children: [Array],
+          externals: []
+        },
+        {
+          address: 31899780177550821629663133723569942367955924765714800219299666804762218362071n,
+          lt: 4000000n,
+          prevTransactionHash: 25725057589677595732949385721909502482017580163064424608090959835486405666929n,
+          prevTransactionLt: 2000000n,
+          now: 1698171184,
+          outMessagesCount: 0,
+          oldStatus: 'active',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:13:04.043000][transaction.cpp:322]\tunpacking account 4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:196]\tlast_paid=1698171184; cells=6 bits=821 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:383]\tend of Account.unpack() for 0:4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7 (balance = 999999943240999ng ; last_trans_lt = 2000000..2000002)\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:870]\tgas limits: max=1000000, limit=48468, credit=0\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1028]\tin_msg_state is null\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171184 562949959656304 4000000 56342229771868097729592965078385434302439516615328066780695604226973907758570 [ 999999991708999 (null) ] CS{Cell{0275c004686a2c066c784a915f3e01c853d3195ed254c948e21adbb3e4a9b3f5f3c74d720c80cd4329c0498000000000007a1209c0e35fa8591b49d340} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1098]\tVM terminated with exit code 0\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1111]\tsteps: 5 gas: used=309, max=1000000, limit=48468, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=true, time=0.000022s\n' +
+            '[ 4][t 0][2023-10-24 18:13:04.044000][transaction.cpp:1145]\tgas fees: 309000 = 65536000 * 309 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=999999991399999ng\n',
+          vmLogs: 'execute SETCP 0\n' +
+            'execute DICTPUSHCONST 19 (xC_,1)\n' +
+            'execute DICTIGETJMPZ\n' +
+            'execute DROP\n' +
+            'execute implicit RET\n',
+          debugLogs: '',
+          events: [],
+          parent: [Object],
+          children: [],
+          externals: []
+        }
+      ],
+      events: [
+        {
+          type: 'message_sent',
+          from: EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G,
+          to: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY,
+          value: 50000000n,
+          body: x{},
+          bounced: false
+        },
+        {
+          type: 'account_created',
+          account: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY
+        },
+        {
+          type: 'message_sent',
+          from: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY,
+          to: EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G,
+          value: 48468000n,
+          body: x{FFFFFFFF},
+          bounced: true
+        }
+      ],
+      externals: [],
+      result: undefined
+    }
+
+      at Object.<anonymous> (tests/InternalMessage.spec.ts:25:17)
+
+
+
+> InternalMessage@0.0.1 test
+> jest
+
+  console.log
+    {
+      transactions: [
+        {
+          address: 31899780177550821629663133723569942367955924765714800219299666804762218362071n,
+          lt: 2000000n,
+          prevTransactionHash: 30785129195713882379026121325288332786993046776416922517874778067456398665447n,
+          prevTransactionLt: 1000000n,
+          now: 1698171420,
+          outMessagesCount: 1,
+          oldStatus: 'active',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:322]\tunpacking account 4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:196]\tlast_paid=1698171420; cells=6 bits=821 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:383]\tend of Account.unpack() for 0:4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7 (balance = 1000000000000000ng ; last_trans_lt = 1000000..1000001)\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:597]\tstorage paid for a message: 5 cells, 1230 bits\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:611]\tcomputed fwd fees = 2730000 + 0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:870]\tgas limits: max=1000000, limit=0, credit=10000\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1028]\tin_msg_state is null\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171420 562949959656304 2000000 56342229771868097729592965078385434302439516615328066780695604226973907758570 [ 999999997270000 (null) ] CS{Cell{0275c004686a2c066c784a915f3e01c853d3195ed254c948e21adbb3e4a9b3f5f3c74d720c80cd4329c050e000000000003d0905c0e35fa931a0001340} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1098]\tVM terminated with exit code 0\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1111]\tsteps: 50 gas: used=1937, max=1000000, limit=1000000, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=true, time=0.000183s\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1145]\tgas fees: 1937000 = 65536000 * 1937 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=999999995333000ng\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1636]\tstorage paid for a message: 3 cells, 792 bits\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.459000][transaction.cpp:1648]\tcomputed fwd fees = 2092000 + 0\n',
+          vmLogs: 'ULLSWAPIFNOT2\n' +
+            'execute DUP\n' +
+            'execute PUSHCONT x02D307D43001FB00\n' +
+            'execute PUSHCONT x32\n' +
+            'execute IFELSE\n' +
+            'execute POP s2\n' +
+            'execute implicit RET\n' +
+            'execute SWAP\n' +
+            'execute NOT\n' +
+            'execute implicit RET\n' +
+            'until loop body end\n' +
+            'until loop terminated\n' +
+            'execute 2DROP\n' +
+            'execute implicit RET\n',
+          debugLogs: '',
+          events: [Array],
+          parent: undefined,
+          children: [Array],
+          externals: []
+        },
+        {
+          address: 111404618500169436302101171512796720561795162635769664474110550572853171976745n,
+          lt: 3000000n,
+          prevTransactionHash: 0n,
+          prevTransactionLt: 0n,
+          now: 1698171420,
+          outMessagesCount: 1,
+          oldStatus: 'uninitialized',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:322]\tunpacking account F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:196]\tlast_paid=0; cells=0 bits=0 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:383]\tend of Account.unpack() for 0:F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29 (balance = 0ng ; last_trans_lt = 0..0)\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:870]\tgas limits: max=500000, limit=500000, credit=0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:1024]\tHASH(in_msg_state) = F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29, account_state_hash = F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.467000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.468000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171420 562949959656304 3000000 21994014335191056140490469662810947111695121971035604613686327183225335465099 [ 500000000 (null) ] CS{Cell{005fc00f64cc7918ee25f416b3879dde40aa87ffd37d2acec8e90b0a6550d872981fa2900000000000000000000000000004} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.468000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.468000][transaction.cpp:1098]\tVM terminated with exit code 9\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.468000][transaction.cpp:1111]\tsteps: 14 gas: used=532, max=500000, limit=500000, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.468000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=false, time=0.000493s\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.468000][transaction.cpp:1145]\tgas fees: 532000 = 65536000 * 532 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=499468000ng\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.468000][transaction.cpp:2470]\tsetting address rewriting info for newly-activated account F64CC7918EE25F416B3879DDE40AA87FFD37D2ACEC8E90B0A6550D872981FA29 with split_depth=0, orig_addr_rewrite=\n',
+          vmLogs: 'GETJMPZ\n' +
+            'execute POP s3\n' +
+            'execute NIP\n' +
+            'execute CTOS\n' +
+            'execute LDU 4\n' +
+            'execute DROP\n' +
+            'execute PUSHINT 1\n' +
+            'execute AND\n' +
+            'execute PUSHCONT x30\n' +
+            'execute IFJMP\n' +
+            'execute LDU 32\n' +
+            'handling exception code 9: cell underflow\n' +
+            'default exception handler, terminating vm with exit code 9\n',
+          debugLogs: '',
+          events: [Array],
+          parent: [Object],
+          children: [Array],
+          externals: []
+        },
+        {
+          address: 31899780177550821629663133723569942367955924765714800219299666804762218362071n,
+          lt: 4000000n,
+          prevTransactionHash: 56882304645756474559107071070168139411780502249760448527626777418034108677779n,
+          prevTransactionLt: 2000000n,
+          now: 1698171420,
+          outMessagesCount: 0,
+          oldStatus: 'active',
+          endStatus: 'active',
+          inMessage: [Object],
+          outMessages: [Dictionary],
+          totalFees: [Object],
+          stateUpdate: [Object],
+          description: [Object],
+          blockchainLogs: '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:322]\tunpacking account 4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:196]\tlast_paid=1698171420; cells=6 bits=821 public_cells=0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:383]\tend of Account.unpack() for 0:4686A2C066C784A915F3E01C853D3195ED254C948E21ADBB3E4A9B3F5F3C74D7 (balance = 999999493241000ng ; last_trans_lt = 2000000..2000002)\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:2584]\tblock random seed set to 0000000000000000000000000000000000000000000000000000000000000000\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:870]\tgas limits: max=1000000, limit=498468, credit=0\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1028]\tin_msg_state is null\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1065]\tcreating VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:931]\tSmartContractInfo initialized with [ 124711402 0 0 1698171420 562949959656304 4000000 56342229771868097729592965078385434302439516615328066780695604226973907758570 [ 999999991709000 (null) ] CS{Cell{0275c004686a2c066c784a915f3e01c853d3195ed254c948e21adbb3e4a9b3f5f3c74d720c80cd4329c050e000000000007a1209c0e35fa1a47e2a1340} bits: 1..268; refs: 0..0} C{E0F2211B8B0039E665E5DD3708333471C6F553A0E26BFF24D8E1FDF7AB69A186} ]\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1093]\tstarting VM\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1098]\tVM terminated with exit code 0\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1111]\tsteps: 5 gas: used=309, max=1000000, limit=498468, credit=0\n' +
+            '[ 3][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1113]\tout_of_gas=false, accepted=true, success=true, time=0.000019s\n' +
+            '[ 4][t 0][2023-10-24 18:17:00.471000][transaction.cpp:1145]\tgas fees: 309000 = 65536000 * 309 /2^16 ; price=65536000; flat rate=[100000 for 100]; remaining balance=999999991400000ng\n',
+          vmLogs: 'execute SETCP 0\n' +
+            'execute DICTPUSHCONST 19 (xC_,1)\n' +
+            'execute DICTIGETJMPZ\n' +
+            'execute DROP\n' +
+            'execute implicit RET\n',
+          debugLogs: '',
+          events: [],
+          parent: [Object],
+          children: [],
+          externals: []
+        }
+      ],
+      events: [
+        {
+          type: 'message_sent',
+          from: EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G,
+          to: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY,
+          value: 500000000n,
+          body: x{},
+          bounced: false
+        },
+        {
+          type: 'account_created',
+          account: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY
+        },
+        {
+          type: 'message_sent',
+          from: EQD2TMeRjuJfQWs4ed3kCqh__TfSrOyOkLCmVQ2HKYH6KQfY,
+          to: EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G,
+          value: 498468000n,
+          body: x{FFFFFFFF},
+          bounced: true
+        }
+      ],
+      externals: [],
+      result: undefined
+    }
+
+      at Object.<anonymous> (tests/InternalMessage.spec.ts:25:17)
+
+
