@@ -2,6 +2,7 @@ DEV Notes for future reference:-
 
 My Address - EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba
 
+
 First Contract
 Resource - https://ton-community.github.io/tutorials/02-contract/
 Initiate the project - npm create ton@latest
@@ -16,6 +17,7 @@ https://www.npmjs.com/package/ton-contract-executor
 .env for deployment
 WALLET_MNEMONIC="your_mnemonic_key"
 WALLET_VERSION="v4"
+
 
 Second Contract
 Counter 
@@ -43,3 +45,12 @@ Value - 0.01
 
 Post Balance - 9.478073983
 Gas - 0.005944058
+
+
+Third Contract 
+Counter - TACT
+Address on terminal - EQB0fstrdeg_1zLa7kuF7-EyHk1uY519xXeU3BNxv0ZXoyPI
+Address on tonviewer - kQB0fstrdeg_1zLa7kuF7-EyHk1uY519xXeU3BNxv0ZXo5hC
+
+Observation - The same txn of a contract in FunC is cheaper than same written in Tact!!
+
