@@ -22,7 +22,7 @@ describe('InternalMessage', () => {
         const deployer = await blockchain.treasury('deployer');
 
         const deployResult = await internalMessage.sendDeploy(deployer.getSender(), toNano('0.5'));
-        console.log(deployResult)
+        // console.log(deployResult.transactions)
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
@@ -37,19 +37,19 @@ describe('InternalMessage', () => {
         // blockchain and internalMessage are ready to use
     });
 
-    // it('should increase counter', async () => {
+    it('should increase counter', async () => {
     
-    //     const sender = await blockchain.treasury('sender');
-    //     console.log(sender)
-    //     // const transferResult = await InternalMessage.sendTransfer(sender.getSender(), {
-    //     //     value: toNano('0.003'),
-    //     // });
+        const sender = await blockchain.treasury('sender');
+        // console.log(sender)
+        const transferResult = await internalMessage.sendTransfer(sender.getSender(), {
+            value: toNano('0.003'),
+        });
 
-    //     // expect(transferResult.transactions).toHaveTransaction({
-    //     //     from: sender.address,
-    //     //     to: internalMessage.address,
-    //     //     success: true,
-    //     // });
+        expect(transferResult.transactions).toHaveTransaction({
+            from: sender.address,
+            to: internalMessage.address,
+            success: true,
+        });
 
-    // });
+    });
 });

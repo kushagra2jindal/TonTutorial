@@ -11,25 +11,24 @@ const op::transfer = "op::transfer"c;
     }
 
     int op = in_msg_body~load_uint(32);
-
-    if (op == op::transfer) {
-        ;; Receiver address
-        slice receiver = "EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba"a;
-        int amount = 1;
+    ;; if (op == op::transfer) {
+    ;; Receiver address
+    slice receiver = "EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba"a;
+    int amount = 1;
     
-        int op = 0;
+    int op1 = 0;
 
-        cell msg = begin_cell()
-            .store_uint(0x18, 6)
-            .store_slice(receiver)
-            .store_coins(amount)
-            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
-            .store_uint(op, 32)
-            .end_cell();
+    cell msg = begin_cell()
+        .store_uint(0x18, 6)
+        .store_slice(receiver)
+        .store_coins(amount)
+        .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+        .store_uint(op1, 32)
+        .end_cell();
 
-        send_raw_message(msg, 3);
-    } 
+    send_raw_message(msg, 3);
+    ;; } 
      
-    throw(0xffff);
+    ;; throw(0xffff);
     
 }
