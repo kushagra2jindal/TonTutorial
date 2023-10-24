@@ -4,8 +4,38 @@
     if (in_msg_body.slice_empty?()) {
         return ();                           
     }
+
     int op = in_msg_body~load_uint(32);      
-    if (op == 1) {                         
-                     
-    }
+
+    ;; IF ELSE CHECK!!
+    ;; if (op == 1) {                         
+    ;; }
+
+    ;; CREATING CELL AND PARSING 
+    ;; cell inner_cell = begin_cell()
+    ;;         .store_uint(123, 16)
+    ;;         .end_cell();
+
+    ;; cell outer_cell = begin_cell()
+    ;;         .store_ref(inner_cell)
+    ;;         .store_ref(inner_cell)
+    ;;         .end_cell();
+
+    ;; slice msg = outer_cell.begin_parse();
+    ;; while (msg.slice_refs_empty?() != -1) { 
+    ;;     cell inner_cell = msg~load_ref();
+    ;; }
+    ;; return ();
+
+
+    ;; CREATING DICT AND CHECKING
+    ;; cell d = new_dict();
+    ;; d~udict_set(256, 0, "hello");
+    ;; d~udict_set(256, 1, "World!");
+    ;; if (d.dict_empty?()) { 
+    ;; }
+    ;; else {
+    ;; }
+
+
 }
