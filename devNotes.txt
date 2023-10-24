@@ -1,0 +1,45 @@
+DEV Notes for future reference:- 
+
+My Address - EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba
+
+First Contract
+Resource - https://ton-community.github.io/tutorials/02-contract/
+Initiate the project - npm create ton@latest
+
+Local Blockchain Development 
+1. @ton-community/sandbox --> This is for everything, Storage Phase, Credit Phase, Compute Phase, Action Phase and Bounce Phase
+https://www.npmjs.com/package/@ton-community/sandbox
+
+2. ton-contract-executor --> This is only for the execution and does not envolve and fee calculation, Technically only the Compute Phase, Action Phase and Bounce Phase
+https://www.npmjs.com/package/ton-contract-executor
+
+.env for deployment
+WALLET_MNEMONIC="your_mnemonic_key"
+WALLET_VERSION="v4"
+
+Second Contract
+Counter 
+
+Commands 
+>  npx blueprint build
+ choose a smart contract and build it
+
+>  npx blueprint test
+ run the default project test suite
+
+>  npx blueprint run
+ choose a script and run it (eg. a deploy script)
+
+>  npx blueprint create AnotherContract
+ create all the necessary files for another new contract
+
+Address on terminal - EQC2EIjqecOkS64jnF7PsFp-KtcLO1td5jtBQ228uI1Bzzn4
+Address on tonviewer - kQC2EIjqecOkS64jnF7PsFp-KtcLO1td5jtBQ228uI1Bz4Jy
+
+Txn hash - https://testnet.tonviewer.com/kQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wp1Q/transaction/7633c85fcc1e38be900dc5149c500ab540dbd44af601e665ba53b74564aca77c
+Fees Calculation -- 
+Prior Balance - 9.494018041
+Value - 0.01
+
+Post Balance - 9.478073983
+Gas - 0.005944058
