@@ -1,0 +1,35 @@
+#include "imports/stdlib.fc";
+
+const op::transfer = "op::transfer"c;
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    if (flags & 1) {
+        return ();
+    }
+
+    int op = in_msg_body~load_uint(32);
+    slice receiver = "EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba"a;
+    int amount = 1;
+
+    int op1 = 0;
+
+    cell message_body = begin_cell() ;; Creating a cell with message
+        .store_uint(op1, 32)
+        .store_slice("Hello, I am KJ!!")
+        .end_cell();
+
+    cell msg = begin_cell()
+        .store_uint(0x18, 6)
+        .store_slice(receiver)
+        .store_coins(amount)
+        .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1) 
+        .store_uint(1, 1)
+        .store_ref(message_body)
+        .end_cell();
+
+    send_raw_message(msg, 3);
+    
+}

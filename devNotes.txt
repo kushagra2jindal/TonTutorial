@@ -65,3 +65,9 @@ Internal Message Transfer
 Address on terminal - EQC4eDGl48IRo1E96hYu17FdrH9khinMe5LJcFM-SZu6yDlb
 Address on tonviewer - kQC4eDGl48IRo1E96hYu17FdrH9khinMe5LJcFM-SZu6yILR
 
+
+Fifth Contract 
+Internal Message Transfer With Body
+
+Address on terminal - EQCs64M217mwRMNE4_o_0rrXVbQb44ehuCCWfiDbF-c5ke3d
+Address on tonviewer - kQCs64M217mwRMNE4_o_0rrXVbQb44ehuCCWfiDbF-c5kVZX
