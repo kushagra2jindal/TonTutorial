@@ -18,7 +18,7 @@ const op::transfer = "op::transfer"c;
 
     cell message_body = begin_cell() ;; Creating a cell with message
         .store_uint(op1, 32)
-        .store_slice("Hello, I am KJ!!")
+        .store_slice("Hello, I am KJ!!!")
         .end_cell();
 
     cell msg = begin_cell()
