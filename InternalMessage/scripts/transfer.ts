@@ -13,7 +13,7 @@ export async function run(provider: NetworkProvider, args: string[]) {
     }
 
     const internalMessage = provider.open(InternalMessage.createFromAddress(address));
-
+ 
     await internalMessage.sendTransfer(provider.sender(), {
         value: toNano('0.003'),
     });
