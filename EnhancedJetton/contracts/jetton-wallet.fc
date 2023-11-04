@@ -1,18 +1,27 @@
-#include "imports/stdlib.fc";
-#include "imports/jetton-utils.fc";
-#include "imports/error-codes.fc";
-#include "imports/op-codes.fc";
-#include "imports/params.fc";
-#include "imports/messages.fc";
+;; Jetton Wallet Smart Contract
 
-const int min_tons_for_storage = 10000000; ;;ONE_TON / 100;
-;; Note that 2 * gas_consumptions is expected to be able to cover fees on both wallets (sender and receiver)
-;; and also constant fees on inter-wallet interaction, in particular fwd fee on state_init transfer
-;; that means that you need to reconsider this fee when:
-;; a) jetton logic become more costly
-;; b) jetton-wallet code become larger or smalle
-;; c) global fee changes / different workchain
-const int gas_consumption = 14000000;
+#include "imports/stdlib.fc";
+#include "imports/params.fc";
+#include "imports/constants.fc";
+#include "imports/jetton-utils.fc";
+#include "imports/op-codes.fc";
+#include "imports/utils.fc";
+#pragma version >=0.2.0;
+
+{-
+
+NOTE that this tokens can be transferred within the same workchain.
+
+This is suitable for most tokens, if you need tokens transferable between workchains there are two solutions:
+
+1) use more expensive but universal function to calculate message forward fee for arbitrary destination (see `misc/forward-fee-calc.cs`)
+
+2) use token holder proxies in target workchain (that way even 'non-universal' token can be used from any workchain)
+
+-}
+
+const min_tons_for_storage = 10000000; ;; 0.01 TON
+const gas_consumption = 10000000; ;; 0.01 TON
 
 {-
   Storage
@@ -21,19 +30,11 @@ const int gas_consumption = 14000000;
 
 (int, slice, slice, cell) load_data() inline {
   slice ds = get_data().begin_parse();
-  return (ds~load_coins(),
-          ds~load_msg_addr(),
-          ds~load_msg_addr(),
-          ds~load_ref());
+  return (ds~load_coins(), ds~load_msg_addr(), ds~load_msg_addr(), ds~load_ref());
 }
 
 () save_data (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) impure inline {
-  set_data(
-           pack_jetton_wallet_data(balance,
-                                   owner_address,
-                                   jetton_master_address,
-                                   jetton_wallet_code)
-          );
+  set_data(pack_jetton_wallet_data(balance, owner_address, jetton_master_address, jetton_wallet_code));
 }
 
 {-
@@ -48,43 +49,43 @@ const int gas_consumption = 14000000;
                      = InternalMsgBody;
 -}
 
-;; read from in_msg_body params of transfer, build transfer message and send it to counterparty jetton wallet
-() send_tokens (slice in_msg_body, slice sender_address, int msg_value, int fwd_fee) impure inline_ref {
-  int query_id = in_msg_body~load_query_id();
+() send_tokens (slice in_msg_body, slice sender_address, int msg_value, int fwd_fee) impure {
+  int query_id = in_msg_body~load_uint(64);
   int jetton_amount = in_msg_body~load_coins();
   slice to_owner_address = in_msg_body~load_msg_addr();
   force_chain(to_owner_address);
   (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) = load_data();
   balance -= jetton_amount;
 
-  throw_unless(error::unauthorized_transfer, equal_slice_bits(owner_address, sender_address));
-  throw_unless(error::not_enough_jettons, balance >= 0);
+  throw_unless(705, equal_slices(owner_address, sender_address));
+  throw_unless(706, balance >= 0);
 
   cell state_init = calculate_jetton_wallet_state_init(to_owner_address, jetton_master_address, jetton_wallet_code);
-  slice to_wallet_address = calc_address(state_init);
+  slice to_wallet_address = calculate_jetton_wallet_address(state_init);
   slice response_address = in_msg_body~load_msg_addr();
-  cell custom_payload = in_msg_body~load_maybe_ref();
+  cell custom_payload = in_msg_body~load_dict();
   int forward_ton_amount = in_msg_body~load_coins();
-  throw_unless(error::malformed_forward_payload, slice_bits(in_msg_body) >= 1);
+  throw_unless(708, slice_bits(in_msg_body) >= 1);
   slice either_forward_payload = in_msg_body;
-  var msg_body = begin_cell()
-          .store_op(op::internal_transfer)
-          .store_query_id(query_id)
-          .store_coins(jetton_amount)
-          .store_slice(owner_address)
-          .store_slice(response_address)
-          .store_coins(forward_ton_amount)
-          .store_slice(either_forward_payload)
-          .end_cell();
   var msg = begin_cell()
-    .store_msg_flag(msg_flag::bounceable)
+    .store_uint(0x18, 6)
     .store_slice(to_wallet_address)
     .store_coins(0)
-    .store_msgbody_prefix_stateinit(state_init, msg_body);
+    .store_uint(4 + 2 + 1, 1 + 4 + 4 + 64 + 32 + 1 + 1 + 1)
+    .store_ref(state_init);
+  var msg_body = begin_cell()
+    .store_uint(op::internal_transfer(), 32)
+    .store_uint(query_id, 64)
+    .store_coins(jetton_amount)
+    .store_slice(owner_address)
+    .store_slice(response_address)
+    .store_coins(forward_ton_amount)
+    .store_slice(either_forward_payload)
+    .end_cell();
 
-
+  msg = msg.store_ref(msg_body);
   int fwd_count = forward_ton_amount ? 2 : 1;
-  throw_unless(error::not_enough_tons, msg_value >
+  throw_unless(709, msg_value >
                      forward_ton_amount +
                      ;; 3 messages: wal1->wal2,  wal2->owner, wal2->response
                      ;; but last one is optional (it is ok if it fails)
@@ -94,7 +95,7 @@ const int gas_consumption = 14000000;
                      ;; by using this instead of fwd_fee
                      ;; msg_fwd_fee(to_wallet, msg_body, state_init, 15)
 
-  send_raw_message(msg.end_cell(), CARRY_REMAINING_GAS); ;; revert on errors
+  send_raw_message(msg.end_cell(), 64); ;; revert on errors
   save_data(balance, owner_address, jetton_master_address, jetton_wallet_code);
 }
 
@@ -106,103 +107,101 @@ const int gas_consumption = 14000000;
                      = InternalMsgBody;
 -}
 
-;; read incoming transfer message, authorize by address, update balance and send notifications/excesses
-() receive_tokens (slice in_msg_body, slice sender_address, int my_ton_balance, int fwd_fee, int msg_value) impure inline_ref {
+() receive_tokens (slice in_msg_body, slice sender_address, int my_ton_balance, int fwd_fee, int msg_value) impure {
   ;; NOTE we can not allow fails in action phase since in that case there will be
   ;; no bounce. Thus check and throw in computation phase.
   (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) = load_data();
-  int query_id = in_msg_body~load_query_id();
+  int query_id = in_msg_body~load_uint(64);
   int jetton_amount = in_msg_body~load_coins();
   balance += jetton_amount;
   slice from_address = in_msg_body~load_msg_addr();
   slice response_address = in_msg_body~load_msg_addr();
-  throw_unless(error::unauthorized_incoming_transfer,
-      equal_slice_bits(jetton_master_address, sender_address)
+  throw_unless(707,
+      equal_slices(jetton_master_address, sender_address)
       |
-      equal_slice_bits(calc_user_wallet(from_address, jetton_master_address, jetton_wallet_code), sender_address)
+      equal_slices(calculate_user_jetton_wallet_address(from_address, jetton_master_address, jetton_wallet_code), sender_address)
   );
   int forward_ton_amount = in_msg_body~load_coins();
 
   int ton_balance_before_msg = my_ton_balance - msg_value;
-  ;;int storage_fee = min_tons_for_storage - min(ton_balance_before_msg, min_tons_for_storage);
-  ;;msg_value -= (storage_fee + gas_consumption);
+  int storage_fee = min_tons_for_storage - min(ton_balance_before_msg, min_tons_for_storage);
+  msg_value -= (storage_fee + gas_consumption);
   if(forward_ton_amount) {
     msg_value -= (forward_ton_amount + fwd_fee);
     slice either_forward_payload = in_msg_body;
 
     var msg_body = begin_cell()
-        .store_op(op::transfer_notification)
-        .store_query_id(query_id)
+        .store_uint(op::transfer_notification(), 32)
+        .store_uint(query_id, 64)
         .store_coins(jetton_amount)
         .store_slice(from_address)
         .store_slice(either_forward_payload)
         .end_cell();
 
     var msg = begin_cell()
-      .store_msg_flag(msg_flag::non_bounceable) ;; we should not bounce here cause receiver can have uninitialized contract
+      .store_uint(0x10, 6) ;; we should not bounce here cause receiver can have uninitialized contract
       .store_slice(owner_address)
       .store_coins(forward_ton_amount)
-      .store_msgbody_prefix_ref(msg_body);
+      .store_uint(1, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+      .store_ref(msg_body);
 
-    send_raw_message(msg.end_cell(), PAY_FEES_SEPARATELY);
+    send_raw_message(msg.end_cell(), 1);
   }
-  raw_reserve(max(ton_balance_before_msg, min_tons_for_storage), 2);
+
   if ((response_address.preload_uint(2) != 0) & (msg_value > 0)) {
     var msg = begin_cell()
-            .store_msg_flag(msg_flag::non_bounceable)
-            .store_slice(response_address)
-            .store_coins(0)
-            .store_msgbody_prefix_slice()
-            .store_op(op::excesses)
-            .store_query_id(query_id);
-    send_raw_message(msg.end_cell(), CARRY_REMAINING_BALANCE | IGNORE_ERRORS);
+      .store_uint(0x10, 6) ;; nobounce - int_msg_info$0 ihr_disabled:Bool bounce:Bool bounced:Bool src:MsgAddress -> 010000
+      .store_slice(response_address)
+      .store_coins(msg_value)
+      .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+      .store_uint(op::excesses(), 32)
+      .store_uint(query_id, 64);
+    send_raw_message(msg.end_cell(), 2);
   }
 
   save_data(balance, owner_address, jetton_master_address, jetton_wallet_code);
 }
 
-{-
--}
-
-() burn_tokens (slice in_msg_body, slice sender_address, int msg_value, int fwd_fee) impure inline_ref {
+() burn_tokens (slice in_msg_body, slice sender_address, int msg_value, int fwd_fee) impure {
   ;; NOTE we can not allow fails in action phase since in that case there will be
   ;; no bounce. Thus check and throw in computation phase.
   (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) = load_data();
-  int query_id = in_msg_body~load_query_id();
+  int query_id = in_msg_body~load_uint(64);
   int jetton_amount = in_msg_body~load_coins();
   slice response_address = in_msg_body~load_msg_addr();
   ;; ignore custom payload
   ;; slice custom_payload = in_msg_body~load_dict();
   balance -= jetton_amount;
-  throw_unless(error::unauthorized_transfer, equal_slice_bits(owner_address, sender_address));
-  throw_unless(error::not_enough_jettons, balance >= 0);
-  throw_unless(error::burn_fee_not_matched, msg_value > fwd_fee + 2 * gas_consumption);
+  throw_unless(705, equal_slices(owner_address, sender_address));
+  throw_unless(706, balance >= 0);
+  throw_unless(707, msg_value > fwd_fee + 2 * gas_consumption);
 
   var msg_body = begin_cell()
-      .store_op(op::burn_notification)
-      .store_query_id(query_id)
+      .store_uint(op::burn_notification(), 32)
+      .store_uint(query_id, 64)
       .store_coins(jetton_amount)
       .store_slice(owner_address)
       .store_slice(response_address)
       .end_cell();
 
   var msg = begin_cell()
-    .store_msg_flag(msg_flag::bounceable)
+    .store_uint(0x18, 6)
     .store_slice(jetton_master_address)
-    .store_coins(0) ;; msg value
-    .store_msgbody_prefix_ref(msg_body);
+    .store_coins(0)
+    .store_uint(1, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+    .store_ref(msg_body);
 
-  send_raw_message(msg.end_cell(), CARRY_REMAINING_GAS);
+  send_raw_message(msg.end_cell(), 64);
 
   save_data(balance, owner_address, jetton_master_address, jetton_wallet_code);
 }
 
-() on_bounce (slice in_msg_body) impure inline_ref {
-  in_msg_body~skip_bounce_flag();
+() on_bounce (slice in_msg_body) impure {
+  in_msg_body~skip_bits(32); ;; 0xFFFFFFFF
   (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) = load_data();
-  int op = in_msg_body~load_op();
-  throw_unless(error::unknown_action_bounced, (op == op::internal_transfer) | (op == op::burn_notification));
-  int query_id = in_msg_body~load_query_id();
+  int op = in_msg_body~load_uint(32);
+  throw_unless(709, (op == op::internal_transfer()) | (op == op::burn_notification()));
+  int query_id = in_msg_body~load_uint(64);
   int jetton_amount = in_msg_body~load_coins();
   balance += jetton_amount;
   save_data(balance, owner_address, jetton_master_address, jetton_wallet_code);
@@ -224,65 +223,26 @@ const int gas_consumption = 14000000;
   cs~load_coins(); ;; skip value
   cs~skip_bits(1); ;; skip extracurrency collection
   cs~load_coins(); ;; skip ihr_fee
-  int fwd_fee = muldiv(cs~load_coins(), 3, 2); ;; we use message fwd_fee for estimation of forward_payload costs
+  int fwd_fee = muldiv(cs~load_coins(), 3, 2); ;; we use message fwd_fee for estimation of forward_payload costs 
 
-  int op = in_msg_body~load_op();
+  int op = in_msg_body~load_uint(32);
 
-  if (op == op::transfer) { ;; outgoing transfer
+  if (op == op::transfer()) { ;; outgoing transfer
     send_tokens(in_msg_body, sender_address, msg_value, fwd_fee);
     return ();
   }
 
-  if (op == op::internal_transfer) { ;; incoming transfer
+  if (op == op::internal_transfer()) { ;; incoming transfer
     receive_tokens(in_msg_body, sender_address, my_balance, fwd_fee, msg_value);
     return ();
   }
 
-  if (op == op::burn) { ;; burn
+  if (op == op::burn()) { ;; burn
     burn_tokens(in_msg_body, sender_address, msg_value, fwd_fee);
     return ();
   }
 
-  (int balance, slice owner_address, slice jetton_master_address, cell jetton_wallet_code) = load_data();
-  ;; Withdraw tons or jettons which accidentally were sent to this jettonWallet
-  if (op == op::withdraw_tons) {
-    throw_unless(error::unauthorized_transfer, equal_slice_bits(owner_address, sender_address));
-    raw_reserve(min_tons_for_storage, 0);
-    var msg = begin_cell()
-            .store_msg_flag(msg_flag::non_bounceable)
-            .store_slice(owner_address)
-            .store_coins(0)
-            .store_msgbody_prefix_slice()
-            .store_op(op::excesses)
-            .store_query_id(in_msg_body~load_query_id());
-    return send_raw_message(msg.end_cell(), CARRY_REMAINING_BALANCE | IGNORE_ERRORS);
-  }
-
-  if (op == op::withdraw_jettons) {
-    throw_unless(error::unauthorized_transfer, equal_slice_bits(owner_address, sender_address));
-    int query_id = in_msg_body~load_query_id();
-    slice child_wallet =  in_msg_body~load_msg_addr();
-    int amount =  in_msg_body~load_coins();
-    cell custom_payload = in_msg_body~load_maybe_ref();
-    var msg = begin_cell()
-            .store_msg_flag(msg_flag::bounceable)
-            .store_slice(child_wallet)
-            .store_coins(0)
-            .store_msgbody_prefix_ref(
-              begin_cell()
-              .store_op(op::transfer)
-              .store_query_id(query_id)
-              .store_coins(amount)
-              .store_slice(owner_address)
-              .store_slice(owner_address)
-              .store_maybe_ref(custom_payload)
-              .store_coins(0)
-              .store_int(false, 1)
-              .end_cell()
-            );
-    return send_raw_message(msg.end_cell(), CARRY_REMAINING_GAS);
-  }
-  throw(error::unknown_action);
+  throw(0xffff);
 }
 
 (int, slice, slice, cell) get_wallet_data() method_id {
