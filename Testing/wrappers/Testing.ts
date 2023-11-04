@@ -10,7 +10,7 @@ export function testingConfigToCell(config: TestingConfig): Cell {
 }
 
 export const Opcodes = {
-    increase: 0x7e8764ef,
+    update: 0x23cd52c,
 };
 
 export class Testing implements Contract {
@@ -46,7 +46,7 @@ export class Testing implements Contract {
             value: opts.value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell()
-                .storeUint(Opcodes.increase, 32)
+                .storeUint(Opcodes.update, 32)
                 .storeUint(opts.increaseBy, 32)
                 .endCell(),
         });

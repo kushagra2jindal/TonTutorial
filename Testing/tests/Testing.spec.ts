@@ -42,10 +42,11 @@ describe('Testing', () => {
     it('update the storage value', async() => {
         const updater = await blockchain.treasury('updater');
         console.log("Initial Value is ==> ", await testing.getAbc());
-        await testing.sendUpdateStorage(updater.getSender(), {
+        const txn = await testing.sendUpdateStorage(updater.getSender(), {
             increaseBy: 100,
             value: toNano('0.05')
-        })
+        });
+        console.log(txn);
         console.log("Updated Value is ==> ", await testing.getAbc());
         expect(await testing.getAbc()).toEqual(100);
     })

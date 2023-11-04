@@ -1,6 +1,6 @@
 #include "imports/stdlib.fc";
 
-const op::increase = "op::increase"c;
+const op::update = "op::update"c;
 
 global int ctx_id;
 global int ctx_abc;
@@ -37,7 +37,7 @@ global int ctx_abc;
 
     int op = in_msg_body~load_uint(32); 
 
-    if (op == op::increase) {
+    if (op == op::update) {
         ctx_abc = in_msg_body~load_uint(32);
         save_data();
         return();
