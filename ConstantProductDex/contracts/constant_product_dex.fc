@@ -1,5 +1,72 @@
 #include "imports/stdlib.fc";
 
+;; This is contract quivalent to uniswap v2 pool 
+;; Nothing else is on-chain!! Router, Factory all is offchain
+
+const op::swap = "op::swap"c;
+const op::addliquidity = "op::addliquidity"c;
+const op::removeliquidity = "op::removeliquidity"c;
+
+;; Just defining all the global valriables required for the contract!!
+global slice token_a;
+global slice token_b;
+global int reserve_a;
+global int reserve_b;
+
+() load_data() impure {
+    var ds = get_data().begin_parse();
+    token_a = ds~load_msg_addr();
+    token_b = ds~load_msg_addr();
+    reserve_a = ds~load_uint(32);
+    reserve_b = ds~load_uint(32);
+    ds.end_parse();
+}
+ 
+() save_data() impure {
+    set_data(
+        begin_cell()
+            .store_msg_addr(token_a)
+            .store_msg_addr(token_b)
+            .store_uint(reserve_a, 32)
+            .store_uint(reserve_b, 32)
+            .end_cell()
+    );
+}
+
+
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
 
+    if (in_msg_body.slice_empty?()) { ;; ignore all empty messages
+        return ();
+    }
+
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    if (flags & 1) {
+        return ();
+    }
+
+    load_data();
+
+    int op = in_msg_body~load_uint(32);
+
+    if (op == op::addliquidity) {
+        ;; Code to add liquidity!!
+
+        ;; Step 1 - Transfer the tokens - abhi nahi aata!! Still learning
+
+        return ();
+    }
+
+    if (op == op::removeliquidity) {
+        ;; Code to remove liquidity!!
+        return ();
+    }
+
+    if (op == op::swap) {
+        ;; Code to remove liquidity!!
+        return ();
+    }
+
+    throw(0xffff);
 }
