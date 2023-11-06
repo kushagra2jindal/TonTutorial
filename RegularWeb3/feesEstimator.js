@@ -1,7 +1,7 @@
 function storageFeeCalculator() {
 
-    const size = 1024 * 1024 * 8
-    const duration = 60 * 60 * 24
+    const size = 1024 * 1024 * 8    // Per bit~!!
+    const duration = 60 * 60 * 24   // Per day~!!
 
     const bit_price_ps = 1
     const cell_price_ps = 500

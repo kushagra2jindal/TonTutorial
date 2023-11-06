@@ -1,0 +1,53 @@
+#include "imports/stdlib.fc";
+
+const op::transfer = "op::transfer"c;
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+
+    if (in_msg_body.slice_empty?()) { ;; ignore all empty messages
+        return ();
+    }
+
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    if (flags & 1) {
+        return ();
+    }
+
+    int op = in_msg_body~load_uint(32);
+
+    if (op == op::transfer) {
+
+        int query_id = 0;
+        slice receiver = "EQD6SIfTQFGd23GOuzIS0GbmzC_e5QYzRbJ7k1y8EEN8Wiba";
+        ;; slice user_wallet_address = "kQCk9mU03tYxDsqZw_9PrSb9ayO-TV8jCYl_blP0QvRfHYTG";
+        slice user_wallet_address = in_msg_body~load_msg_addr();
+
+        var jetton_transfer_message = begin_cell()
+            .store_uint(0x0f8a7ea5, 32)
+            .store_uint(query_id, 64)
+            .store_coins(5000000000)
+            .store_slice(receiver)
+            .store_slice(receiver)
+            .store_coins(0)
+            .store_uint(1, 2)
+            .end_cell();
+
+        var msg = begin_cell()
+            .store_uint(0x18, 6)
+            .store_slice(user_wallet_address)
+            .store_coins(50000000) ;; gas
+            ;; .store_uint(4, 1 + 4 + 4 + 64 + 32)
+            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+            .store_uint(0, 1) ;; state-init null
+            .store_uint(1, 1); ;; message body as REF
+
+        msg = msg.store_ref(jetton_transfer_message);
+
+        send_raw_message(msg.end_cell(), 2 + 1);
+        return ();
+    }
+
+    throw(0xffff);
+
+}

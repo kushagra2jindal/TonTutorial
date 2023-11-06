@@ -19,12 +19,14 @@ describe('Testing', () => {
 
         testing = blockchain.openContract(Testing.createFromConfig({
             id: 1,
-            abc: 12
+            abc: 123456
         }, code));
 
         const deployer = await blockchain.treasury('deployer');
 
         const deployResult = await testing.sendDeploy(deployer.getSender(), toNano('0.05'));
+
+        // console.log(deployResult)
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
@@ -46,7 +48,7 @@ describe('Testing', () => {
             increaseBy: 100,
             value: toNano('0.05')
         });
-        console.log(txn);
+        // console.log(txn);
         console.log("Updated Value is ==> ", await testing.getAbc());
         expect(await testing.getAbc()).toEqual(100);
     })

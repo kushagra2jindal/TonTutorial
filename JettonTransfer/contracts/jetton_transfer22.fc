@@ -1,0 +1,42 @@
+#include "imports/stdlib.fc";
+
+;; const op::transfer = "op::transfer"c;
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    if (flags & 1) {
+        return ();
+    }
+
+    int op = in_msg_body~load_uint(32);
+
+    ;;  Static Variables!!
+    int query_id = 0;
+    slice receiver = "EQDOdzu8k94ZIVH7P56u_yd3NwZHMAei3a-XkuG6mIhvPLOZ"a;
+    int jetton_amount = 10000000000;
+    int ton_value = 6000000000;
+
+    var jetton_transfer_message = begin_cell()
+        .store_uint(0xf8a7ea5, 32)
+        .store_uint(query_id, 64)
+        .store_coins(jetton_amount)
+        .store_slice(receiver)
+        .store_slice(receiver)
+        .store_coins(0)
+        .store_uint(1, 2) 
+        .end_cell();
+
+    var msg = begin_cell()
+        .store_uint(0x18, 6)
+        .store_slice("kQB3MtovD4b6Yy_4u5L26VGdLs3RSDq-wPxh68T_tSkMlj0V")
+        .store_coins(ton_value)
+        .store_uint(4, 1 + 4 + 4 + 64 + 32)
+        .store_uint(0, 1)
+        .store_uint(1, 1);
+
+    msg = msg.store_ref(jetton_transfer_message);
+    send_raw_message(msg.end_cell(), 3); 
+
+}
