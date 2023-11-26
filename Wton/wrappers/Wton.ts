@@ -8,7 +8,7 @@ export type WtonConfig = {
 
 export function wtonConfigToCell(config: WtonConfig): Cell {
     return beginCell()
-        .storeCoins(10000000000)
+        .storeCoins(0)
         .storeAddress(config.adminAddress)
         .storeRef(config.content)
         .storeRef(config.jettonWalletCode)
@@ -36,12 +36,18 @@ export class Wton implements Contract {
         });
     }
 
-    async sendDeposit(provider: ContractProvider, via: Sender, value: bigint) {
+    async sendDeposit(provider: ContractProvider, via: Sender, opts: {
+        queryId: number;
+        value: bigint;
+    }) {
         await provider.internal(via, {
-            value,
+            value: opts.value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell()
+                    .storeUint(0x95db9d39, 32)
+                    .storeUint(opts.queryId, 64)
                 .endCell(),
         });
     }
+
 }
