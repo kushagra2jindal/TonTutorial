@@ -24,14 +24,23 @@ Second Contract
 Counter 
 
 Commands 
->  npx blueprint build
- choose a smart contract and build it
 
->  npx blueprint test
- run the default project test suite
+choose a smart contract and build it
+``` 
+npx blueprint build
+```
 
->  npx blueprint run
- choose a script and run it (eg. a deploy script)
+Run the default project test suite
+```
+npx blueprint test
+```
+ 
+Choose a script and run it (eg. a deploy script)
+```
+npx blueprint run
+```
 
->  npx blueprint create AnotherContract
- create all the necessary files for another new contract
+Create all the necessary files for another new contract
+```
+npx blueprint create AnotherContract
+```
