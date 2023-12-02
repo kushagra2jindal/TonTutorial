@@ -51,9 +51,9 @@ export async function run(provider: NetworkProvider) {
     // console.log("Testt =>> ", randomSeed);
     
     const data = {
-        name: "Kush",
-        symbol: "KJ",
-        description: "Token from code!!!",
+        name: "WTONKJ1",
+        symbol: "WTONKJ1",
+        description: "WTON JETTON TOKEN!!!",
         image: "https://cache.tonapi.io/imgproxy/kmZ2_jWomjdmp4Iy7TK19AnEYEqAW7XfvDZq8QCqUxU/rs:fill:200:200:1/g:no/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3RvbmtlZXBlci9vcGVudG9uYXBpL21hc3Rlci9wa2cvcmVmZXJlbmNlcy9tZWRpYS90b2tlbl9wbGFjZWhvbGRlci5wbmc.webp"
     }
     let dict = Dictionary.empty(

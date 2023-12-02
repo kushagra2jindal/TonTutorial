@@ -10,9 +10,8 @@ export async function run(provider: NetworkProvider, args: string[]) {
     const jettonMinter = provider.open(JettonMinter.createFromAddress(address));
 
         await jettonMinter.sendMint(provider.sender(), {
-            value: toNano('0.2'),
+            value: toNano('1'),
             amount: toNano('0.05'),
-            jettonAmount: toNano('21000000'),    // This is the amount of tokens to be minted!!
             toAddress: provider.sender().address as Address,
             queryId: Date.now()
         });

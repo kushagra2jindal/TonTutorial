@@ -40,7 +40,6 @@ export class JettonMinter implements Contract {
     async sendMint(provider: ContractProvider, via: Sender, 
         opts: {
             toAddress: Address;
-            jettonAmount: bigint;
             amount: bigint;
             queryId: number;
             value: bigint;
@@ -54,17 +53,6 @@ export class JettonMinter implements Contract {
                 .storeUint(opts.queryId, 64)
                 .storeAddress(opts.toAddress)
                 .storeCoins(opts.amount)
-                .storeRef(
-                    beginCell()
-                        .storeUint(0x178d4519, 32)
-                        .storeUint(opts.queryId, 64)
-                        .storeCoins(opts.jettonAmount)
-                        .storeAddress(this.address)
-                        .storeAddress(this.address)
-                        .storeCoins(0)
-                        .storeUint(0, 1)
-                    .endCell()
-                )
             .endCell(),
         });
     }
